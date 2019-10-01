@@ -23,6 +23,12 @@ class App extends React.Component {
         console.error("problem with the github api", err);
       });
   }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.user !== prevState.user) {
+      console.log("hello");
+    }
+  }
   render() {
     return (
       <>
@@ -32,7 +38,8 @@ class App extends React.Component {
           <div className="flex-row">
             <div className="flex-large">
               <div>
-                <h2>User List</h2>
+                {/* <h2>User List</h2> */}
+                <UserCard user={this.state.user} />
                 <UserCard user={this.state.user} />
               </div>
             </div>

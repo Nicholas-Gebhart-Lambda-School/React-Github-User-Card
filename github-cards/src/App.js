@@ -36,6 +36,33 @@ class App extends React.Component {
       });
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.user !== prevState.user) {
+      axios
+        .get(`https://api.github.com/users/${this.state.search}`)
+        .then(res => {
+          this.setState({
+            user: res.data
+          });
+          console.log(this.state.user);
+        })
+        .catch(err => {
+          console.error("problem with the github api", err);
+        });
+      axios
+        .get(`https://api.github.com/users/${this.state.search}/followers`)
+        .then(res => {
+          this.setState({
+            userList: res.data
+          });
+          console.log(this.state.userList);
+        })
+        .catch(err => {
+          console.error("problem with the github api", err);
+        });
+    }
+  }
+
   handleChanges = e => {
     this.setState({
       search: e.target.value

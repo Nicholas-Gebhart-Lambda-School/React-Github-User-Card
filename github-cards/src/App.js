@@ -29,6 +29,13 @@ class App extends React.Component {
       console.log("hello");
     }
   }
+
+  handleChanges = e => {
+    this.setState({
+      search: e.target.value
+    });
+  };
+
   render() {
     return (
       <>
@@ -38,15 +45,22 @@ class App extends React.Component {
           <div className="flex-row">
             <div className="flex-large">
               <div>
-                {/* <h2>User List</h2> */}
+                <h2>Created by:</h2>
                 <UserCard user={this.state.user} />
+                <h4>Followed by:</h4>
+                {/* Set this state to user search */}
                 <UserCard user={this.state.user} />
               </div>
             </div>
             <div className="flex-large">
               <form>
                 <label htmlFor="name">Find User</label>
-                <input type="text" name="name" value="" />
+                <input
+                  type="text"
+                  name="name"
+                  value={this.state.search}
+                  onChange={this.handleChanges}
+                />
 
                 <button className="button muted-button">Search</button>
               </form>

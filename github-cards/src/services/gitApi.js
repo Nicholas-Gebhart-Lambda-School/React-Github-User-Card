@@ -11,8 +11,10 @@ export const getUserIds = user => {
 };
 
 export const getFollowerIds = user => {
-  const result = axios.get(`${baseUrl}/${user}/followers`).then(({ data }) => {
-    return [data];
+  const result = axios.get(`${baseUrl}/${user}/followers`).then(data => {
+    console.log(data);
+    console.log(typeof data);
+    return data;
   });
 
   return result;

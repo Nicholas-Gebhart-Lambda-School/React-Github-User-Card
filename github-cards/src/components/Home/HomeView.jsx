@@ -1,6 +1,8 @@
 import React from "react";
 import { getUserIds, getFollowerIds } from "../../services/gitApi";
 
+import FollowerCard from "../Cards/FollowerCard";
+
 class HomeView extends React.Component {
   state = {
     user: "",
@@ -16,7 +18,7 @@ class HomeView extends React.Component {
         });
     });
     getFollowerIds("gebhartn").then(
-      data => data && this.setState({ userList: data })
+      data => data && this.setState({ userList: data.data })
     );
   }
 
@@ -47,26 +49,48 @@ class HomeView extends React.Component {
   render() {
     return (
       <>
-        <p>{this.state.user.name}</p>
-        <div className="small-container">
+        {/* <p>{typeof this.state.userList}</p> */}
+        {/* <p>{this.state.user.name}</p> */}
+        <div className="medium-container">
           <h1>GitHub Cards</h1>
-          <div className="flex-row">
-            <div className="flex-large">
-              <form onSubmit={this.submitHandler}>
-                <label htmlFor="name">Find User</label>
+          <div>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center"
+              }}
+            >
+              <h4>User:</h4>
+
+              <form
+                style={{ display: "flex", width: "50%" }}
+                onSubmit={this.submitHandler}
+              >
                 <input
                   type="text"
                   name="name"
                   value={this.state.search}
                   onChange={this.handleChanges}
+                  placeholder="Search users..."
                 />
-                <button className="button muted-button">Search</button>
+                <button>Search</button>
               </form>
-              <div>
-                <h4>User:</h4>
-              </div>
-              <div>
-                <h4>Followers:</h4>
+              <h4>Followers:</h4>
+              <div
+                style={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  margin: "10px"
+                }}
+              >
+                {this.state.userList.length > 0 ? (
+                  this.state.userList.map((follower, index) => {
+                    return <FollowerCard key={index} follower={follower} />;
+                  })
+                ) : (
+                  <h4>Searching for followers...</h4>
+                )}
               </div>
             </div>
           </div>

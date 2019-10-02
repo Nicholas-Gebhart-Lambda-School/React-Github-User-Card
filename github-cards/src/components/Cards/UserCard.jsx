@@ -1,53 +1,24 @@
 import React from "react";
 
-import axios from "axios";
-
-class App extends React.Component {
-  state = {
-    myData: {},
-    followers: []
-  };
-  componentDidMount() {
-    axios
-      .get("https://api.github.com/users/Chrismis79")
-      .then(res => {
-        console.log("This is res:", res);
-        this.setState({
-          myData: res.data.avatar_url
-        });
-      })
-      .catch(error =>
-        alert("There was a problem fetching requested data", error)
-      );
-    axios.get("https://api.github.com/users/Chrismis79/followers").then(res => {
-      console.log("This is followers res", res.data);
-      this.setState({
-        followers: res.data
-      });
-    });
-  }
-
+class UserCard extends React.Component {
   render() {
     return (
       <>
-        <header className="header">
-          <p>
-            <span role="img" aria-label="red heart">
-              ❤️
-            </span>
-            's
-          </p>
-        </header>
-        <div className="card">
-          <div className="card-info">
-            {this.state.avatar_url}
-
-            {/* {this.state.followers.map(user => <img src={user.myData} key={user.myData} alt={user.myData}/>)} */}
-          </div>
+        <div
+          style={{
+            marginTop: "10px",
+            padding: "10px",
+            border: "1px solid rgba(0,0,0,0.1)",
+            borderRadius: "10px"
+          }}
+        >
+          <h2>{this.props.user.name}</h2>
+          <p>{this.props.user.bio}</p>
+          <a href={this.props.user.html_url}>View Profile</a>
         </div>
       </>
     );
   }
 }
 
-export default App;
+export default UserCard;

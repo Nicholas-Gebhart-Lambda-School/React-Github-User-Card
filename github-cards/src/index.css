@@ -1075,3 +1075,7 @@ caption {
 /**
  * Layout
  */
+
+* {
+  text-align: center;
+}
